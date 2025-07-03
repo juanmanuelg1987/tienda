@@ -27,7 +27,9 @@ def load_user(user_id):
 def index():
     # Página principal: muestra el catálogo de productos
     products = Product.query.all()
-    return render_template('index.html', products=products)
+    # Selecciona los primeros 3 productos como destacados (puedes cambiar la lógica)
+    featured_products = Product.query.limit(3).all()
+    return render_template('index.html', products=products, featured_products=featured_products)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
