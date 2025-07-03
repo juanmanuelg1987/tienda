@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Portal de Ventas Online - Base
 
 Este proyecto es una base para un portal de ventas online, desarrollado con Flask y SQLite. Está pensado para ser fácil de entender, expandir y personalizar.
@@ -29,3 +30,6 @@ Este proyecto es una base para un portal de ventas online, desarrollado con Flas
 
 ## Comentarios en el código
 Cada archivo, función y etiqueta HTML contiene comentarios explicativos en español, para que puedas aprender y modificar fácilmente el proyecto.
+=======
+# tienda
+>>>>>>> a6432b0e1ff26465a35b2ffdce754c2d9a82dab9
