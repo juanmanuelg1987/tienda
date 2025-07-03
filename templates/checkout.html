@@ -1,0 +1,39 @@
+<!-- templates/checkout.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Compra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Resumen de tu Pedido</h1>
+    {% if cart_items %}
+        <ul>
+            {% for item in cart_items %}
+            <li>
+                <strong>{{ item['name'] }}</strong> (x{{ item['quantity'] }}) - ${{ item['subtotal'] }}
+            </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total:</strong> ${{ total }}</p>
+        <a id="whatsapp-link" class="whatsapp-btn" target="_blank">Enviar pedido por WhatsApp</a>
+        <script>
+            // Genera el mensaje para WhatsApp
+            const items = {{ cart_items|tojson|safe }};
+            let mensaje = '¡Hola! Quiero hacer este pedido:%0A';
+            for (let i = 0; i < items.length; i++) {
+                mensaje += '- ' + items[i].name + ' (x' + items[i].quantity + ') - $' + items[i].subtotal + '%0A';
+            }
+            mensaje += '%0ATotal: ${{ total }}%0AUsuario: {{ current_user.username }}';
+            // Cambia el número por el tuyo si quieres recibir los pedidos
+            const numero = '5491123456789'; // Ejemplo: Argentina +54 9 11 2345-6789
+            const url = 'https://wa.me/' + numero + '?text=' + mensaje;
+            document.getElementById('whatsapp-link').href = url;
+        </script>
+    {% else %}
+        <p>Tu carrito está vacío.</p>
+    {% endif %}
+    <p><a href="{{ url_for('index') }}">Volver al catálogo</a></p>
+</body>
+</html>

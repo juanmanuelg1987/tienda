@@ -1,0 +1,57 @@
+<!-- templates/index.html -->
+<!-- Página principal: muestra el catálogo de productos -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal de Ventas Online</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Catálogo de Productos</h1>
+    {% if current_user.is_authenticated %}
+        <p>Bienvenido, {{ current_user.username }} | <a href="{{ url_for('logout') }}">Cerrar sesión</a> | <a href="{{ url_for('cart') }}">Ver carrito</a></p>
+    {% else %}
+        <p><a href="{{ url_for('login') }}">Iniciar sesión</a> | <a href="{{ url_for('register') }}">Registrarse</a></p>
+    {% endif %}
+    <h2 class="section-title">Alimentos para Perros</h2>
+    <div class="catalog">
+        {% for product in products if product.category == 'perro' %}
+        <div class="product">
+            {% if product.image_url %}
+                <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}" class="product-img">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="Sin imagen" class="product-img">
+            {% endif %}
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p><strong>Precio:</strong> ${{ product.price }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}">Agregar al carrito</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <hr style="margin:40px 0 30px 0; border: none; border-top: 2px dashed #b2ebf2;">
+    <h2 class="section-title">Alimentos para Gatos</h2>
+    <div class="catalog">
+        {% for product in products if product.category == 'gato' %}
+        <div class="product">
+            {% if product.image_url %}
+                <img src="{{ url_for('static', filename=product.image_url) }}" alt="{{ product.name }}" class="product-img">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="Sin imagen" class="product-img">
+            {% endif %}
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p><strong>Precio:</strong> ${{ product.price }}</p>
+            <p><strong>Stock:</strong> {{ product.stock }}</p>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}">Agregar al carrito</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
