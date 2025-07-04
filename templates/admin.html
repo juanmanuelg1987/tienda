@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Administrar Productos{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-primary">Administración de Productos</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle bg-white rounded shadow-sm" id="admin-products-table">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio ($)</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr data-id="{{ product.id }}">
+                    <td>{{ product.id }}</td>
+                    <td><input type="text" class="form-control" value="{{ product.name }}" name="name"></td>
+                    <td><input type="number" class="form-control" value="{{ '%.2f'|format(product.price) }}" step="0.01" name="price"></td>
+                    <td><input type="number" class="form-control" value="{{ product.stock }}" min="0" name="stock"></td>
+                    <td>
+                        <button class="btn btn-success btn-save">Guardar</button>
+                        <button class="btn btn-danger btn-delete">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary mt-3" id="add-product-btn">Agregar nuevo producto</button>
+</div>
+<script>
+// Guardar cambios
+function sendUpdate(row) {
+    const id = row.dataset.id;
+    const data = {
+        id: id,
+        name: row.querySelector('[name="name"]').value,
+        price: row.querySelector('[name="price"]').value,
+        stock: row.querySelector('[name="stock"]').value
+    };
+    fetch('/admin/update_product', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(r => r.json()).then(resp => {
+        if(resp.success) alert('Producto actualizado');
+        else alert('Error al actualizar');
+    });
+}
+// Eliminar producto
+function sendDelete(row) {
+    if(!confirm('¿Seguro que deseas eliminar este producto?')) return;
+    const id = row.dataset.id;
+    fetch('/admin/delete_product', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+    }).then(r => r.json()).then(resp => {
+        if(resp.success) row.remove();
+        else alert('Error al eliminar');
+    });
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-save').forEach(btn => {
+        btn.addEventListener('click', function() {
+            sendUpdate(this.closest('tr'));
+        });
+    });
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+            sendDelete(this.closest('tr'));
+        });
+    });
+    document.getElementById('add-product-btn').addEventListener('click', function() {
+        const tbody = document.querySelector('#admin-products-table tbody');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>Nuevo</td>
+            <td><input type="text" class="form-control" name="name"></td>
+            <td><input type="number" class="form-control" name="price" step="0.01"></td>
+            <td><input type="number" class="form-control" name="stock" min="0" value="0"></td>
+            <td>
+                <button class="btn btn-success btn-save-new">Guardar</button>
+                <button class="btn btn-secondary btn-cancel">Cancelar</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+        row.querySelector('.btn-cancel').onclick = () => row.remove();
+        row.querySelector('.btn-save-new').onclick = function() {
+            const data = {
+                name: row.querySelector('[name="name"]').value,
+                price: row.querySelector('[name="price"]').value,
+                stock: row.querySelector('[name="stock"]').value
+            };
+            fetch('/admin/add_product', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(r => r.json()).then(resp => {
+                if(resp.success) location.reload();
+                else alert('Error al agregar');
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

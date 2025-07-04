@@ -2,10 +2,10 @@
 # Punto de entrada de la aplicación Flask para el portal de ventas online
 # Aquí se configuran las rutas principales y la inicialización de la app
 
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 # Eliminado Flask-Login para login
-from models import db, User, Product, Order
+from models import db, Product, Order
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'cambia_esto_por_una_clave_segura'
@@ -14,7 +14,58 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+# --- ADMINISTRACIÓN DE PRODUCTOS ---
+@app.route('/admin')
+def admin():
+    products = Product.query.order_by(Product.id).all()
+    return render_template('admin.html', products=products)
 
+@app.route('/admin/update_product', methods=['POST'])
+def admin_update_product():
+    data = request.get_json()
+    product = Product.query.get(int(data['id']))
+    if not product:
+        return jsonify({'success': False, 'msg': 'Producto no encontrado'})
+    product.name = data['name']
+    try:
+        product.price = float(data['price'])
+    except Exception:
+        product.price = 0.0
+    try:
+        product.stock = int(data['stock'])
+    except Exception:
+        product.stock = 0
+    db.session.commit()
+    return jsonify({'success': True})
+
+@app.route('/admin/delete_product', methods=['POST'])
+def admin_delete_product():
+    data = request.get_json()
+    product = Product.query.get(int(data['id']))
+    if not product:
+        return jsonify({'success': False, 'msg': 'Producto no encontrado'})
+    db.session.delete(product)
+    db.session.commit()
+    return jsonify({'success': True})
+
+@app.route('/admin/add_product', methods=['POST'])
+def admin_add_product():
+    data = request.get_json()
+    name = data.get('name', '').strip()
+    if not name:
+        return jsonify({'success': False, 'msg': 'Nombre requerido'})
+    try:
+        price = float(data.get('price', 0))
+    except Exception:
+        price = 0.0
+    try:
+        stock = int(data.get('stock', 0))
+    except Exception:
+        stock = 0
+    product = Product(name=name, price=price, stock=stock, category='perro')
+    db.session.add(product)
+    db.session.commit()
+    return jsonify({'success': True})
 
 
 

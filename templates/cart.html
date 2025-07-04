@@ -1,15 +1,41 @@
-<!-- templates/cart.html -->
-<!-- Página del carrito de compras -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Carrito de Compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Tienda de Mascotas</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Botón flotante WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 9999;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 62px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 18px rgba(44,62,80,0.13);
+            font-size: 2.2rem;
+            transition: background 0.2s;
+        }
+        .whatsapp-float:hover {
+            background: #128c7e;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="display-6 fw-bold text-primary mb-0">Carrito de Compras</h1>
@@ -55,7 +81,40 @@
         </div>
         {% endif %}
     </div>
+    <!-- Botón flotante WhatsApp -->
+    <a href="https://wa.me/5491135568477" class="whatsapp-float" target="_blank" title="¡Escríbenos por WhatsApp!">
+        <i class="bi bi-whatsapp"></i>
+    </a>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para cambiar cantidad (aquí deberías implementar la lógica real)
+        function changeQuantity(productId, change) {
+            // Esta función debería hacer una petición al servidor para actualizar la cantidad
+            console.log('Cambiar cantidad del producto', productId, 'en', change);
+            alert('Funcionalidad para cambiar cantidad - Producto ID: ' + productId + ', Cambio: ' + change);
+        }
+        // Función para eliminar item (aquí deberías implementar la lógica real)
+        function removeItem(productId) {
+            if (confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')) {
+                // Esta función debería hacer una petición al servidor para eliminar el item
+                console.log('Eliminar producto', productId);
+                alert('Funcionalidad para eliminar producto - ID: ' + productId);
+            }
+        }
+        // Animación suave al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.cart-item');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
-</html>
+</html></html>
