@@ -34,7 +34,7 @@
             {% if current_user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Cerrar sesión</a></li>
             {% else %}
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Iniciar sesión</a></li>
+              <li class="nav-item"></li>
             {% endif %}
           </ul>
         </div>
@@ -113,7 +113,7 @@
                     <i class="bi bi-cart-plus"></i> Agregar
                   </a>
                 {% else %}
-                  <a href="{{ url_for('login') }}" class="btn btn-outline-primary flex-fill">Iniciar sesión</a>
+                  
                 {% endif %}
                 <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalProduct{{ product.id }}" title="Ver detalles">
                   <i class="bi bi-eye"></i>
@@ -145,7 +145,7 @@
                     <i class="bi bi-cart-plus"></i> Agregar al carrito
                   </a>
                   {% else %}
-                  <a href="{{ url_for('login') }}" class="btn btn-outline-primary">Iniciar sesión para comprar</a>
+                  
                   {% endif %}
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
@@ -201,7 +201,7 @@
     {% if current_user.is_authenticated %}
         <p class="text-end text-success">Bienvenido, {{ current_user.username }} | <a href="{{ url_for('logout') }}">Cerrar sesión</a> | <a href="{{ url_for('cart') }}">Ver carrito</a></p>
     {% else %}
-        <p class="text-end"><a href="{{ url_for('login') }}">Iniciar sesión</a> | <a href="{{ url_for('register') }}">Registrarse</a></p>
+        <p class="text-end"><a href="{{ url_for('register') }}">Registrarse</a></p>
     {% endif %}
 
     <!-- Filtros visuales y búsqueda -->
@@ -246,7 +246,7 @@
                   <i class="bi bi-cart-plus"></i> Agregar
                 </a>
               {% else %}
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary flex-fill">Iniciar sesión</a>
+                
               {% endif %}
               <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalProductCatalog{{ product.id }}" title="Ver detalles">
                 <i class="bi bi-eye"></i>
@@ -277,7 +277,7 @@
                   <i class="bi bi-cart-plus"></i> Agregar al carrito
                 </a>
                 {% else %}
-                <a href="{{ url_for('login') }}" class="btn btn-outline-primary">Iniciar sesión para comprar</a>
+                
                 {% endif %}
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
               </div>
