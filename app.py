@@ -4,7 +4,7 @@
 
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
-# Eliminado Flask-Login para login
+
 from models import db, Product, Order
 
 app = Flask(__name__)
@@ -77,28 +77,8 @@ def index():
     featured_products = Product.query.limit(3).all()
     return render_template('index.html', products=products, featured_products=featured_products)
 
-    flash('Sesión cerrada', 'info')
-    return redirect(url_for('index'))
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    # Registro de usuario nuevo
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if User.query.filter_by(username=username).first():
-            flash('El usuario ya existe', 'warning')
-            return redirect(url_for('register'))
-        user = User(username=username)
-        user.set_password(password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
-        return redirect(url_for('index'))
-    return render_template('register.html')
 
 @app.route('/cart')
-
 def cart():
     # Página del carrito de compras (simple, por sesión)
     cart = session.get('cart', {})
