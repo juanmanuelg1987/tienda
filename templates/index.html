@@ -33,9 +33,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('cart') }}">Carrito</a></li>
             
               
-            {% else %}
-              <li class="nav-item"></li>
-            
+
           </ul>
         </div>
       </div>
@@ -96,7 +94,7 @@
               <span class="position-absolute top-0 end-0 badge bg-warning text-dark fs-6 m-3">¡Últimas unidades!</span>
             {% else %}
               <span class="position-absolute top-0 end-0 badge bg-success fs-6 m-3">Nuevo</span>
-            
+            {% endif %}
             <!-- Imagen con Quick View Modal -->
             <a href="#" data-bs-toggle="modal" data-bs-target="#modalProduct{{ product.id }}">
               <img src="{{ url_for('static', filename=product.image_url or 'img/default.jpg') }}" class="card-img-top p-3" style="height:220px;object-fit:contain;" alt="{{ product.name }}">
@@ -217,7 +215,7 @@
             <span class="position-absolute top-0 end-0 badge bg-warning text-dark fs-6 m-3">¡Últimas unidades!</span>
           {% else %}
             <span class="position-absolute top-0 end-0 badge bg-success fs-6 m-3">Nuevo</span>
-          
+          {% endif %}
           <!-- Imagen con Quick View Modal -->
           <a href="#" data-bs-toggle="modal" data-bs-target="#modalProductCatalog{{ product.id }}">
             <img src="{{ url_for('static', filename=product.image_url or 'img/default.jpg') }}" class="card-img-top p-3" style="height:200px;object-fit:contain;" alt="{{ product.name }}">
@@ -233,12 +231,9 @@
                 <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary flex-fill add-to-cart-btn" data-product-name="{{ product.name }}">
                   <i class="bi bi-cart-plus"></i> Agregar
                 </a>
-              {% else %}
-                
-              
-              <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalProductCatalog{{ product.id }}" title="Ver detalles">
-                <i class="bi bi-eye"></i>
-              </button>
+                            <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalProductCatalog{{ product.id }}" title="Ver detalles">
+                  <i class="bi bi-eye"></i>
+                </button>
             </div>
           </div>
         </div>
@@ -264,8 +259,6 @@
                 <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-success add-to-cart-btn" data-product-name="{{ product.name }}">
                   <i class="bi bi-cart-plus"></i> Agregar al carrito
                 </a>
-                {% else %}
-                
                 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
               </div>
