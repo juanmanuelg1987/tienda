@@ -25,7 +25,7 @@
             for (let i = 0; i < items.length; i++) {
                 mensaje += '- ' + items[i].name + ' (x' + items[i].quantity + ') - $' + items[i].subtotal + '%0A';
             }
-            mensaje += '%0ATotal: ${{ total }}%0AUsuario: {{ current_user.username }}';
+            mensaje += '%0ATotal: ${{ total }}';
             // Cambia el número por el tuyo si quieres recibir los pedidos
             const numero = '5491135568477'; // Ejemplo: Argentina +54 9 11 2345-6789
             const url = 'https://wa.me/' + numero + '?text=' + mensaje;

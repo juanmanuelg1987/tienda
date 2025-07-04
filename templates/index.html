@@ -108,13 +108,9 @@
               <p class="card-text small">{{ product.description }}</p>
               <span class="badge bg-warning text-dark fs-6 mb-2">${{ '%.2f'|format(product.price) }}</span>
               <div class="d-flex gap-2 mt-2">
-                {% if current_user.is_authenticated %}
-                  <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary flex-fill add-to-cart-btn" data-product-name="{{ product.name }}">
-                    <i class="bi bi-cart-plus"></i> Agregar
-                  </a>
-                {% else %}
-                  
-                {% endif %}
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-primary flex-fill add-to-cart-btn" data-product-name="{{ product.name }}">
+  <i class="bi bi-cart-plus"></i> Agregar
+</a>
                 <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalProduct{{ product.id }}" title="Ver detalles">
                   <i class="bi bi-eye"></i>
                 </button>
@@ -140,13 +136,9 @@
                   </ul>
                 </div>
                 <div class="modal-footer">
-                  {% if current_user.is_authenticated %}
                   <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn btn-success add-to-cart-btn" data-product-name="{{ product.name }}">
-                    <i class="bi bi-cart-plus"></i> Agregar al carrito
-                  </a>
-                  {% else %}
-                  
-                  {% endif %}
+  <i class="bi bi-cart-plus"></i> Agregar al carrito
+</a>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
               </div>
@@ -198,11 +190,7 @@
     </style>
 
     <h1 class="display-5 fw-bold text-primary mb-4 text-center">Catálogo de Productos</h1>
-    {% if current_user.is_authenticated %}
-        <p class="text-end text-success">Bienvenido, {{ current_user.username }} | <a href="{{ url_for('logout') }}">Cerrar sesión</a> | <a href="{{ url_for('cart') }}">Ver carrito</a></p>
-    {% else %}
-        <p class="text-end"><a href="{{ url_for('register') }}">Registrarse</a></p>
-    {% endif %}
+    <p class="text-end"><a href="{{ url_for('cart') }}">Ver carrito</a></p>
 
     <!-- Filtros visuales y búsqueda -->
     <div class="row mb-4 g-2 align-items-center">
