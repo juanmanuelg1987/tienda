@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Actualizar precios desde PDF</h2>
+  <form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="pdf_file" class="form-label">Selecciona el archivo PDF de lista de precios</label>
+      <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept="application/pdf" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar precios</button>
+    <a href="{{ url_for('admin_articulos') }}" class="btn btn-secondary">Cancelar</a>
+  </form>
+  {% if resumen %}
+    <div class="alert alert-info mt-4">
+      <strong>Actualización completada.</strong><br>
+      Productos actualizados: {{ resumen.actualizados }}<br>
+      Productos no encontrados: {{ resumen.no_encontrados }}<br>
+      {% if resumen.reporte_url %}
+        <a href="{{ resumen.reporte_url }}" class="btn btn-link">Descargar reporte de no encontrados</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

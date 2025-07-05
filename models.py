@@ -16,8 +16,8 @@ class Product(db.Model):
     image_url = db.Column(db.String(255), nullable=True)  # URL o ruta de imagen
     category = db.Column(db.String(20), nullable=False, default='perro')  # 'perro' o 'gato'
 
-class Order(db.Model):
-    # Modelo de pedido (muy simple)
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # Aquí podrías agregar más campos como fecha, estado, etc.
+#class Order(db.Model):
+#    # Modelo de pedido (muy simple)
+#    id = db.Column(db.Integer, primary_key=True)
+#    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#    # Aquí podrías agregar más campos como fecha, estado, etc.

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Administración de Artículos</h2>
+    <a href="{{ url_for('admin') }}" class="btn btn-secondary mb-3">Volver a Admin General</a>
+    <a href="{{ url_for('admin_add_articulo') }}" class="btn btn-success mb-3">Agregar Artículo</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>
+                  {% if producto.image_url %}
+                    <img src="{{ url_for('static', filename=producto.image_url) }}" alt="img" style="width:48px;height:48px;object-fit:contain;border:1px solid #ddd;">
+                  {% else %}
+                    <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="img" style="width:48px;height:48px;object-fit:contain;border:1px solid #ddd;">
+                  {% endif %}
+                </td>
+                <td>{{ producto.name }}</td>
+                <td>${{ producto.price }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.category }}</td>
+                <td>
+                    <a href="{{ url_for('admin_edit_articulo', id=producto.id) }}" class="btn btn-sm btn-primary">Editar</a>
+                    <a href="{{ url_for('admin_delete_articulo', id=producto.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este artículo?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

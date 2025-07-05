@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask and local files
+instance/
+.webassets-cache
+.env
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Mac
+.DS_Store
+
+# Images (keep product images)
+!static/img/productos/
+
+# PDF, Excel, and reports
+*.pdf
+*.xlsx
+*.csv
+!static/
+
+# VSCode
+.vscode/
+
+# Netlify
+.netlify/
+
+# Deployment
+windsurf_deployment.yaml

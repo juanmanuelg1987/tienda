@@ -204,6 +204,11 @@
       </div>
     </div>
 
+    <div class="mb-2 text-end">
+      <span class="badge bg-info text-dark fs-6">
+        Mostrando <span id="contadorProductos">{{ products|length }}</span> productos
+      </span>
+    </div>
     <div class="row row-cols-1 row-cols-md-3 g-4" id="catalogoProductos">
       {% for product in products %}
       <div class="col producto-card" data-category="{{ product.category }}" data-name="{{ product.name|lower }} {{ product.description|lower }}">
